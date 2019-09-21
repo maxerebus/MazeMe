@@ -1,7 +1,7 @@
-var canvasWidth = 600;
-var canvasHeigh = 600;
+const canvasWidth = 600,
+canvasHeigh = 600;
 var cols, rows;
-var wh = 20;
+var wh = 40;
 var grid = [];
 var stack = new Stack();
 var current;
@@ -9,6 +9,9 @@ var actionY = 0;
 var actionX = 0;
 var stroke = 3;
 var player;
+var visualize = false;
+var visualized = true;
+var isDone = true;
 
 function setup() {
     cnv = createCanvas(canvasWidth, canvasHeigh);
@@ -16,48 +19,31 @@ function setup() {
     cols = floor(width/wh);
     rows = floor(height/wh);
     noCursor();
+    init();
     generateNew();
-
 }
 
 function generateNew(){
-    stack.clear();
-    grid = [];
-    for (var i = 0; i < rows; i++){
-        var row = [];
-        for(var j = 0; j < cols; j++){
-            var cell = new Cell(i, j);
-            row.push(cell);
-        }
-        grid.push(row);
-    }
-    current = grid[0][0];
-    grid[0][0].walls[3] = false;
-    grid[rows-1][cols-1].walls[1] = false;
+        visualize = false;
+        visualized = true;
+    init();
     for(var i = 0; i < rows; i++){
         while(!(grid[i].every( (cell) => cell.visited))){
-            current.visited = true;
-            current.highlight();
-            var next = current.checkNeighbors();
-            if(next){
-                next.visited = true;
-                stack.push(current);
-                removeWalls(current, next);
-                current = next;
-            }
-            else if(stack.length() > 0) {
-                current = stack.pop();
-            }
+            mazeGeneration();
         };
     }
-
-    150, 0, 150, 200
-    var color = {r:150, g: 0, b: 150, a:200 };
-    player = new Player(wh, color);
-
     redraw()
+    playerInit();
+    current = grid[0][0];
 }
-  
+
+function generateNewVisual(){
+    init();
+    visualize = true;
+    visualized = false;
+    isDone = false;
+}
+
 function draw() {
     background(55);
     for(var i = 0; i < rows; i++){
@@ -65,28 +51,37 @@ function draw() {
             grid[i][j].show();
         }
     }
-
-    actionY = 0;
-    actionX = 0;
-
-    if(keyIsDown(UP_ARROW)){
-        player.moveY("up");
+    if(visualize && !visualized){
+        if(isDone && current.row === 0 && current.col === 0){
+            visualized = true;
+            playerInit();
+        }
+        else
+            isDone = mazeGeneration();
     }
-    if(keyIsDown(RIGHT_ARROW)){
-        player.moveX("right");
+    else if(visualized){
+       actionY = 0;
+       actionX = 0;
+   
+       if(keyIsDown(UP_ARROW)){
+           player.moveY("up");
+       }
+       if(keyIsDown(RIGHT_ARROW)){
+           player.moveX("right");
+       }
+       if(keyIsDown(DOWN_ARROW)){
+           player.moveY("down");
+       }
+       if(keyIsDown(LEFT_ARROW)){
+           player.moveX("left");
+       }
+   
+       player.checkPlayerPos();
+       player.update();
+   
+       fill(150, 0, 150, 200);
+       rect(player.position.x1, player.position.y1, player.size, player.size);
     }
-    if(keyIsDown(DOWN_ARROW)){
-        player.moveY("down");
-    }
-    if(keyIsDown(LEFT_ARROW)){
-        player.moveX("left");
-    }
-
-    player.checkPlayerPos();
-    player.update();
-
-    fill(150, 0, 150, 200);
-    rect(player.position.x1, player.position.y1, player.size, player.size);
 }
 
 function removeWalls(current, next){
@@ -111,6 +106,49 @@ function removeWalls(current, next){
     }
 }
 
+function init(){
+    stack.clear();
+    grid = [];
+
+    for (var i = 0; i < rows; i++){
+        var row = [];
+        for(var j = 0; j < cols; j++){
+            var cell = new Cell(i, j);
+            row.push(cell);
+        }
+        grid.push(row);
+    }
+
+    current = grid[0][0];
+    grid[0][0].walls[3] = false;
+    grid[rows-1][cols-1].walls[1] = false;
+}
+
+function mazeGeneration(){
+    current.visited = true;
+    current.highlight();
+    var next = current.checkNeighbors();
+    if(next){
+        next.visited = true;
+        stack.push(current);
+        removeWalls(current, next);
+        current = next;
+    }
+    else if(stack.length() > 0) {
+        current = stack.pop();
+    }
+
+    isDone = true;
+    for(var i = 0; i < rows; i++)
+        if(!(grid[i].every( (cell) => cell.visited)))
+            isDone = false
+    return isDone
+}
+
+function playerInit(){
+    var color = {r:150, g: 0, b: 150, a:200 };
+    player = new Player(wh, color);
+}
 // function roundToTwoDig(num) {    
 //     return +(Math.round(num + "e+1")  + "e-1");
 // }
