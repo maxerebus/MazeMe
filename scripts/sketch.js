@@ -37,7 +37,7 @@ function setup() {
     cnv = createCanvas(canvasWidth, canvasHeight);
     console.log(canvasWidth, canvasHeight)
     console.log(wh);
-    strokeWeight(3);
+    strokeWeight(4);
     cols = floor(width/wh);
     rows = floor(height/wh);
     noCursor();
