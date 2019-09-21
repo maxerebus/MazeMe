@@ -1,7 +1,7 @@
 var canvasWidth = 600,
 canvasHeight = 600;
 var cols, rows;
-var wh = 30;
+var wh;
 var grid = [];
 var stack = new Stack();
 var current;
@@ -17,13 +17,15 @@ function preload(){
     canvasWidth = floor(Math.floor(windowWidth/10) / 10 * 90);
     canvasHeight = floor(Math.floor(windowHeight/10) / 10 * 90);
     var different = true;
-    while(gcd(canvasWidth, canvasHeight) < 30 || gcd(canvasWidth, canvasHeight) > 60){
+    while(gcd(canvasWidth, canvasHeight) < 30 || gcd(canvasWidth, canvasHeight) > 50){
         different ? canvasHeight-- : canvasWidth--;
         different = !different;
         if(canvasWidth < 100 || canvasHeight < 100){
-            canvasWidth = floor(Math.floor(windowWidth/100) * 90);
-            canvasHeight = floor(Math.floor(windowHeight/100) * 90);
-            wh = gcd(canvasWidth/50, canvasHeight/50);
+            var onePw = Math.floor(windowWidth/100);
+            var onePh = Math.floor(windowHeight/100);
+            canvasWidth = floor(onePw * 90);
+            canvasHeight = floor(onePh * 90);
+            wh = gcd(onePw * 15, onePh * 15);
             break;
 
         }
@@ -31,7 +33,7 @@ function preload(){
 }
 
 function setup() {
-    wh = gcd(canvasWidth, canvasHeight);
+    wh = wh ? wh : gcd(canvasWidth, canvasHeight);
     cnv = createCanvas(canvasWidth, canvasHeight);
     console.log(canvasWidth, canvasHeight)
     console.log(wh);
