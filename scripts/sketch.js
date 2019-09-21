@@ -1,7 +1,7 @@
-const canvasWidth = 600,
+var canvasWidth = 600,
 canvasHeigh = 600;
 var cols, rows;
-var wh = 40;
+var wh = 30;
 var grid = [];
 var stack = new Stack();
 var current;
@@ -14,6 +14,9 @@ var visualized = true;
 var isDone = true;
 
 function setup() {
+    console.log(windowWidth, windowHeight);
+    canvasWidth = floor(windowWidth / 100 * 80);
+    canvasHeigh = floor(windowHeight / 100 * 80);
     cnv = createCanvas(canvasWidth, canvasHeigh);
     strokeWeight(3);
     cols = floor(width/wh);
