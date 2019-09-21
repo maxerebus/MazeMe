@@ -2,7 +2,7 @@ class Player{
     constructor(blockSize, color){
         this.size = Math.floor(blockSize/1.3);
         this.offset = Math.floor((blockSize - this.size) / 2);
-        this.speed = this.offset / 2;
+        this.speed = this.offset;
         this.color = color;
         this.actionX = 0;
         this.actionY = 0;
