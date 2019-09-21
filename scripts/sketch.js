@@ -1,5 +1,5 @@
 var canvasWidth = 600,
-canvasHeigh = 600;
+canvasHeight = 600;
 var cols, rows;
 var wh = 30;
 var grid = [];
@@ -13,11 +13,21 @@ var visualize = false;
 var visualized = true;
 var isDone = true;
 
+function preload(){
+    canvasWidth = floor(Math.floor(windowWidth/10) / 10 * 90);
+    canvasHeight = floor(Math.floor(windowHeight/10) / 10 * 90);
+    var different = true;
+    while(gcd(canvasWidth, canvasHeight) < 30 || gcd(canvasWidth, canvasHeight) > 60){
+        different ? canvasHeight-- : canvasWidth--;
+        different = !different;
+    }
+}
+
 function setup() {
-    console.log(windowWidth, windowHeight);
-    canvasWidth = floor(windowWidth / 100 * 80);
-    canvasHeigh = floor(windowHeight / 100 * 80);
-    cnv = createCanvas(canvasWidth, canvasHeigh);
+    wh = gcd(canvasWidth, canvasHeight);
+    cnv = createCanvas(canvasWidth, canvasHeight);
+    console.log(canvasWidth, canvasHeight)
+    console.log(wh);
     strokeWeight(3);
     cols = floor(width/wh);
     rows = floor(height/wh);
@@ -151,6 +161,15 @@ function mazeGeneration(){
 function playerInit(){
     var color = {r:150, g: 0, b: 150, a:200 };
     player = new Player(wh, color);
+}
+
+function gcd(x, y) {
+    while(y) {
+        var t = y;
+        y = x % y;
+        x = t;
+    }
+    return x;
 }
 // function roundToTwoDig(num) {    
 //     return +(Math.round(num + "e+1")  + "e-1");
