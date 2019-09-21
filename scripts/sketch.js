@@ -20,6 +20,13 @@ function preload(){
     while(gcd(canvasWidth, canvasHeight) < 30 || gcd(canvasWidth, canvasHeight) > 60){
         different ? canvasHeight-- : canvasWidth--;
         different = !different;
+        if(canvasWidth < 100 || canvasHeight < 100){
+            canvasWidth = floor(Math.floor(windowWidth/100) * 90);
+            canvasHeight = floor(Math.floor(windowHeight/100) * 90);
+            wh = gcd(canvasWidth/10, canvasHeight/10);
+            break;
+
+        }
     }
 }
 
