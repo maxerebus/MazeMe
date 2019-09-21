@@ -4,8 +4,8 @@ class Cell {
         this.col = col;
         this.walls = [true, true, true, true];
         this.visited = false;
-        this.x = this.row*wh;
-        this.y = this.col*wh;
+        this.x = this.col*wh;
+        this.y = this.row*wh;
         this.borderLines = [
             new Line(this.x      , this.y    , this.x + wh , this.y),
             new Line(this.x + wh , this.y    , this.x + wh , this.y + wh),
@@ -16,11 +16,10 @@ class Cell {
 
     checkNeighbors(){
         var neighbors = [];
-        
-        var top    = grid[index(this.row    , this.col - 1)];
-        var right  = grid[index(this.row + 1, this.col)];
-        var bottom = grid[index(this.row    , this.col + 1)];
-        var left   = grid[index(this.row - 1, this.col)];
+            var top    = this.row-1 >= 0 ? grid[this.row - 1][this.col    ] : false;
+            var right  = this.col+1 < cols ? grid[this.row    ][this.col + 1] : false;
+            var bottom = this.row + 1 < rows ? grid[this.row + 1][this.col    ] : false;
+            var left   = this.col - 1 >= 0 ? grid[this.row    ][this.col - 1] : false;
 
         if(top && !top.visited){
             neighbors.push(top);
@@ -88,8 +87,5 @@ class Line{
     }
     display(){
         line(this.x1, this.y1, this.x2, this.y2);
-    }
-    equals(another){
-        return this.x1 === another.x1 && this.y1 === another.y1 && this.x2 === another.x2 && this.y2 === another.y2 ? true : false;
     }
 }
