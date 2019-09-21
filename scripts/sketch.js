@@ -23,7 +23,7 @@ function preload(){
         if(canvasWidth < 100 || canvasHeight < 100){
             canvasWidth = floor(Math.floor(windowWidth/100) * 90);
             canvasHeight = floor(Math.floor(windowHeight/100) * 90);
-            wh = gcd(canvasWidth/10, canvasHeight/10);
+            wh = gcd(canvasWidth/50, canvasHeight/50);
             break;
 
         }
