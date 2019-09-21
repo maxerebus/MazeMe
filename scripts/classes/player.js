@@ -36,7 +36,7 @@ class Player{
         if(x1 < 0 || x2 > canvasWidth){
             this.actionX = 0;
         } 
-        if(y1 < 0 || y2 > canvasHeigh){
+        if(y1 < 0 || y2 > canvasHeight){
             this.actionY = 0;
         }
     
