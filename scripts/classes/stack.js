@@ -1,22 +1,27 @@
-class Stack{
-    constructor(){
+class Stack {
+    constructor() {
         this.arr = [];
     }
 
-    push(obj){
+    push(obj) {
         this.arr.push(obj);
     }
 
-    pop(obj){
-        var poppedObj = this.arr.pop(obj);
+    pop() {
+        var poppedObj = this.arr.pop();
         return poppedObj;
     }
 
-    length(){
+    length() {
         return this.arr.length;
     }
 
-    clear(){
+    clear() {
         this.arr = [];
+    }
+    forEach(func) {
+        this.arr.forEach(function(element) {
+            func(element);
+        });
     }
 }

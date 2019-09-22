@@ -1,26 +1,28 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Maze</title>
-    <link rel="stylesheet" href="style.css">
-    <script src="scripts/libraries/p5.min.js"></script>
-    <script src="scripts/classes/stack.js"></script>
-    <script src="scripts/classes/cell.js"></script>
-    <script src="scripts/classes/player.js"></script>
-    <script src="scripts/sketch.js"></script>
-</head>
-<body>
-    <section id="options">
-        <button id="newMaze">ახალი</button>
-        <label for="visualize">
-            ვიზუალიზაცია
-            <input id="visualize" name="visualize" type="checkbox">
-        </label>
-    </section>
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+        <title>Maze</title>
+        <link rel="stylesheet" href="style.css" />
+        <script src="scripts/libraries/p5.min.js"></script>
+        <script src="scripts/classes/stack.js"></script>
+        <script src="scripts/classes/cell.js"></script>
+        <script src="scripts/classes/player.js"></script>
+        <script src="scripts/solver.js"></script>
+        <script src="scripts/sketch.js"></script>
+    </head>
+    <body>
+        <section id="options">
+            <button id="newMaze">ახალი</button>
+            <label for="visualize">
+                ვიზუალიზაცია
+                <input id="visualize" name="visualize" type="checkbox" />
+            </label>
+            <button id="solve">ამოხსენი</button>
+        </section>
 
-    <script src="scripts/listeners.js"></script>
-</body>
+        <script src="scripts/listeners.js"></script>
+    </body>
 </html>
