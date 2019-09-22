@@ -14,5 +14,5 @@ newBtn.addEventListener("click", function() {
 });
 
 solveBtn.addEventListener("click", function() {
-    solve(grid);
+    myMethod.solveFull();
 });

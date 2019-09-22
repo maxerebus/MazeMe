@@ -175,6 +175,3 @@ function gcd(x, y) {
     }
     return x;
 }
-// function roundToTwoDig(num) {
-//     return +(Math.round(num + "e+1")  + "e-1");
-// }

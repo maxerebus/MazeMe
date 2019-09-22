@@ -1,34 +1,3 @@
-function solve(grid) {
-    grid.forEach(row => row.forEach(col => (col.visited = false)));
-    var currentBlock = grid[0][0];
-    currentBlock.visited = true;
-    var endBlock = grid[rows - 1][cols - 1];
-    var path = new Stack();
-    var foundPath = false;
-    endBlock.changeColor(255, 255, 255, 255);
-    while (!foundPath) {
-        if (
-            currentBlock.row === endBlock.row &&
-            currentBlock.col === endBlock.col
-        ) {
-            path.push(currentBlock);
-            foundPath = true;
-        } else {
-            var neighbors = getNeighbors(currentBlock);
-            var nextBlock = getNextBlock(neighbors);
-            if (nextBlock) {
-                path.push(currentBlock);
-                currentBlock = nextBlock;
-                currentBlock.visited = true;
-            } else {
-                currentBlock = path.pop();
-            }
-        }
-    }
-    colorPath(path);
-    return path;
-}
-
 function getNeighbors(cell) {
     var row = cell.row;
     var col = cell.col;
@@ -68,3 +37,46 @@ function colorPath(path) {
         element.changeColor(255, 0, 255, 20);
     });
 }
+
+function myMethodInit() {}
+
+const myMethod = {
+    setDefaultValues() {
+        this.currentBlock = grid[0][0];
+        this.currentBlock.visited = true;
+        this.endBlock = grid[rows - 1][cols - 1];
+        this.path = new Stack();
+        this.foundPath = false;
+        grid.forEach(row => row.forEach(col => (col.visited = false)));
+    },
+
+    solveFull() {
+        this.setDefaultValues();
+        while (!this.foundPath) {
+            this.foundPath = this.step();
+        }
+        colorPath(this.path);
+        return this.path;
+    },
+
+    step() {
+        if (
+            this.currentBlock.row === this.endBlock.row &&
+            this.currentBlock.col === this.endBlock.col
+        ) {
+            this.path.push(this.currentBlock);
+            return true;
+        } else {
+            var neighbors = getNeighbors(this.currentBlock);
+            var nextBlock = getNextBlock(neighbors);
+            if (nextBlock) {
+                this.path.push(this.currentBlock);
+                this.currentBlock = nextBlock;
+                this.currentBlock.visited = true;
+            } else {
+                this.currentBlock = this.path.pop();
+            }
+        }
+        return false;
+    }
+};
