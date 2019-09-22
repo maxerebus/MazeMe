@@ -22,23 +22,14 @@ class Cell {
 
     checkNeighbors() {
         var neighbors = [];
-        var top = this.row - 1 >= 0 ? grid[this.row - 1][this.col] : false;
-        var right = this.col + 1 < cols ? grid[this.row][this.col + 1] : false;
-        var bottom = this.row + 1 < rows ? grid[this.row + 1][this.col] : false;
-        var left = this.col - 1 >= 0 ? grid[this.row][this.col - 1] : false;
-
-        if (top && !top.visited) {
-            neighbors.push(top);
-        }
-        if (right && !right.visited) {
-            neighbors.push(right);
-        }
-        if (left && !left.visited) {
-            neighbors.push(left);
-        }
-        if (bottom && !bottom.visited) {
-            neighbors.push(bottom);
-        }
+        if (this.row - 1 >= 0 && !grid[this.row - 1][this.col].visited)
+            neighbors.push(grid[this.row - 1][this.col]);
+        if (this.col + 1 < cols && !grid[this.row][this.col + 1].visited)
+            neighbors.push(grid[this.row][this.col + 1]);
+        if (this.row + 1 < rows && !grid[this.row + 1][this.col].visited)
+            neighbors.push(grid[this.row + 1][this.col]);
+        if (this.col - 1 >= 0 && !grid[this.row][this.col - 1].visited)
+            neighbors.push(grid[this.row][this.col - 1]);
 
         if (neighbors.length > 0) {
             var r = floor(random(0, neighbors.length));
@@ -50,18 +41,9 @@ class Cell {
 
     show() {
         stroke(255);
-        if (this.walls[0]) {
-            this.borderLines[0].display();
-        }
-        if (this.walls[1]) {
-            this.borderLines[1].display();
-        }
-        if (this.walls[2]) {
-            this.borderLines[2].display();
-        }
-        if (this.walls[3]) {
-            this.borderLines[3].display();
-        }
+        this.walls.forEach((wall, index) => {
+            if (wall) this.borderLines[index].display();
+        });
         if (this.visited) {
             noStroke();
             fill(this.color.r, this.color.g, this.color.b, this.color.a);
@@ -75,7 +57,7 @@ class Cell {
         rect(this.x, this.y, wh, wh);
     }
 
-    changeColor(r = 0, g = 0, b = 0, a = 0) {
+    changeColor(r = 55, g = 55, b = 55, a = 0) {
         noStroke();
         this.color.r = r;
         this.color.g = g;
