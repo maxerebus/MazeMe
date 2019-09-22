@@ -9,9 +9,9 @@ var actionY = 0;
 var actionX = 0;
 var stroke = 3;
 var player;
-var visualize = false;
 var visualized = true;
 var isDone = true;
+var solved = true;
 
 function preload() {
     canvasWidth = floor((Math.floor(windowWidth / 10) / 10) * 90);
@@ -47,7 +47,6 @@ function setup() {
 }
 
 function generateNew() {
-    visualize = false;
     visualized = true;
     init();
     for (var i = 0; i < rows; i++) {
@@ -62,7 +61,6 @@ function generateNew() {
 
 function generateNewVisual() {
     init();
-    visualize = true;
     visualized = false;
     isDone = false;
 }
@@ -74,11 +72,13 @@ function draw() {
             grid[i][j].show();
         }
     }
-    if (visualize && !visualized) {
+    if (!visualized) {
         if (isDone && current.row === 0 && current.col === 0) {
             visualized = true;
             playerInit();
         } else isDone = mazeGeneration();
+    } else if (!solved) {
+        solved = myMethod.solveByStep();
     } else if (visualized) {
         actionY = 0;
         actionX = 0;

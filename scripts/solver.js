@@ -1,3 +1,5 @@
+var visualizeSolution = false;
+
 function getNeighbors(cell) {
     var row = cell.row;
     var col = cell.col;
@@ -51,12 +53,20 @@ const myMethod = {
     },
 
     solveFull() {
+        solved = false;
         this.setDefaultValues();
         while (!this.foundPath) {
             this.foundPath = this.step();
         }
         colorPath(this.path);
+        solved = true;
         return this.path;
+    },
+
+    solveByStep() {
+        var reply = this.step();
+        colorPath(this.path);
+        return reply;
     },
 
     step() {

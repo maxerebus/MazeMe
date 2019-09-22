@@ -2,17 +2,19 @@ const newBtn = document.getElementById("newMaze"),
     visualizeCheckBox = document.getElementById("visualize"),
     solveBtn = document.getElementById("solve");
 
-var visualizeMaze = false;
+var visualize = false;
 
 visualizeCheckBox.addEventListener("change", function() {
-    visualizeMaze = !visualizeMaze;
+    visualize = !visualize;
 });
 
 newBtn.addEventListener("click", function() {
-    if (visualizeMaze) generateNewVisual();
+    if (visualize) generateNewVisual();
     else generateNew();
 });
 
 solveBtn.addEventListener("click", function() {
-    myMethod.solveFull();
+    myMethod.setDefaultValues();
+    if (visualize) solved = myMethod.solveByStep();
+    else myMethod.solveFull();
 });
